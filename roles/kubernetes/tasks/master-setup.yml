@@ -16,16 +16,33 @@
     verbosity: 2
   when: not kubernetes_init_stat.stat.exists
 
-- name: Ensure .kube directory exists.
+- name: Ensure .kube directory exists. (root user)
   file:
     path: ~/.kube
     state: directory
 
-- name: Symlink the kubectl admin.conf to ~/.kube/conf.
+- name: Symlink the kubectl admin.conf to ~/.kube/conf. (root user)
   file:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
     state: link
+
+- name: Ensure .kube directory exists. (ubuntu user)
+  file:
+    path: /home/ubuntu/.kube
+    state: directory
+
+- name: Symlink the kubectl admin.conf to /home/ubuntu/.kube/conf. (ubuntu user)
+  file:
+    src: /etc/kubernetes/admin.conf
+    dest: ~/.kube/config
+    state: link
+
+- name: Update permissions (ubuntu user)
+  file:
+    path: /home/ubuntu/.kube/config
+    owner: ubuntu
+    group: ubuntu
 
 - name: Configure Flannel networking.
   command: "{{ item }}"
