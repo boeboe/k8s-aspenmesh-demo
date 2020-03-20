@@ -1,0 +1,9 @@
+[jumphost]
+jumphost ansible_host=10.1.1.4
+
+[master]
+master ansible_host=10.1.1.5
+
+[workers]
+worker1 ansible_host=10.1.1.6
+worker2 ansible_host=10.1.1.7
