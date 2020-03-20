@@ -1,4 +1,6 @@
-- hosts: all
+- name: Install Kubernetes
+  hosts: all
+  become: yes
   roles:
     - geerlingguy.docker
     - geerlingguy.kubernetes
