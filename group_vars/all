@@ -21,7 +21,7 @@ kubernetes_web_ui_manifest_file: https://raw.githubusercontent.com/kubernetes/da
 
 kubernetes_pod_network:
   # Flannel CNI.
-  # cni: 'flannel'
+  cni: 'flannel'
   cidr: '10.244.0.0/16'
   # Calico CNI.
   # cni: 'calico'
