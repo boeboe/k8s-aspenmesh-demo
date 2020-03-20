@@ -1,7 +1,6 @@
 - name: Install Kubernetes
   hosts: all
   become: yes
-  become_user: ubuntu
   roles:
     - docker
     - kubernetes
