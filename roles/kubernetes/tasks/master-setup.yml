@@ -35,7 +35,7 @@
 - name: Symlink the kubectl admin.conf to /home/ubuntu/.kube/conf. (ubuntu user)
   file:
     src: /etc/kubernetes/admin.conf
-    dest: ~/.kube/config
+    dest: /home/ubuntu/.kube/config
     state: link
 
 - name: Update permissions (ubuntu user)
