@@ -44,6 +44,12 @@
     owner: ubuntu
     group: ubuntu
 
+- name: Copy kube config to jumphost
+  fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/ubuntu/.kube/config
+    flat: yes
+
 - name: Configure Flannel networking.
   command: "{{ item }}"
   with_items:
