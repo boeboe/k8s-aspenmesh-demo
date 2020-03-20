@@ -9,3 +9,15 @@
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default('present') }}"
   with_items: "{{ kubernetes_packages }}"
+
+- name: Install package that allow bash completion
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+        - bash-completion
+
+- name: Add kubectl bash completion
+  shell: /usr/bin/kubectl completion bash >/etc/bash_completion.d/kubectl
