@@ -4,20 +4,15 @@
 - name: Ensure dependencies are installed.
   package: name=curl state=present
 
-- name: Install Kubernetes packages.
+- name: Install kubectl
   package:
-    name: "{{ item.name | default(item) }}"
-    state: "{{ item.state | default('present') }}"
-  with_items: "{{ kubernetes_packages }}"
+    name: kubectl
+    state: present
 
 - name: Install package that allow bash completion
-  apt:
-    name: "{{ packages }}"
+  package:
+    name: bash-completion
     state: present
-    update_cache: yes
-  vars:
-    packages:
-        - bash-completion
 
 - name: Add kubectl bash completion
   shell: /usr/bin/kubectl completion bash >/etc/bash_completion.d/kubectl

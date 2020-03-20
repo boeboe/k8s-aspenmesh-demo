@@ -1,8 +1,4 @@
 ---
-kubernetes_packages:
-  - name: kubectl
-    state: present
-
 kubernetes_version: '1.15'
 
 kubernetes_apt_release_channel: main
