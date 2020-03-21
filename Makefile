@@ -17,4 +17,4 @@ install_aspenmesh:
 	ansible-playbook -i hosts aspenmesh.yml
 
 aspenmesh_credentials:
-	. aspenmesh_credentials.sh
+	. ./aspenmesh_credentials.sh
