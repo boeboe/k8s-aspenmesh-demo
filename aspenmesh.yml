@@ -1,8 +1,5 @@
 - name: Install AspenMesh
   hosts: localhost
   connection: local
-  vars:
-    aspenmesh_username: lookup('env', 'ASPEN_MESH_USERNAME ')
-    aspenmesh_password: lookup('env', 'ASPEN_MESH_PASSWORD')
   roles:
     - aspenmesh

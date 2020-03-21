@@ -1,4 +1,4 @@
 ---
-aspenmesh_username: yourusername
-aspenmesh_password: yourpassword
+aspenmesh_username: {{ lookup('env','ASPEN_MESH_USERNAME') }}
+aspenmesh_password: {{ lookup('env','ASPEN_MESH_PASSWORD') }}
 aspenmesh_version: '1.4.6'
