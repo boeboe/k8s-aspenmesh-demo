@@ -10,4 +10,6 @@ install_k8s:
 	ansible-playbook -i hosts site.yml
 
 install_helm:
-	curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+	curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash && \
+	/usr/local/bin/helm completion bash >/etc/bash_completion.d/helm
+
