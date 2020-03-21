@@ -15,3 +15,6 @@ install_helm:
 
 install_aspenmesh:
 	ansible-playbook -i hosts aspenmesh.yml
+
+aspenmesh_credentials:
+	source ./aspenmesh_credentials.sh
