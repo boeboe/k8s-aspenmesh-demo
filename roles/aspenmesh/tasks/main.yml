@@ -13,4 +13,4 @@
   command: "echo {{ lookup('env','ASPEN_MESH_USERNAME') }} {{ lookup('env','ASPEN_MESH_PASSWORD') }} {{ aspenmesh_version }}"
 
 - name: Download Aspenmesh tarball
-  shell: ASPEN_MESH_VERSION={{ aspenmesh_version }} download-release.sh
+  shell: ASPEN_MESH_VERSION={{ aspenmesh_version }} files/download-release.sh
