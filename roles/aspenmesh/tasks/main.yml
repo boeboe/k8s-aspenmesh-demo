@@ -6,5 +6,5 @@
   register: admission_webhooks
 
 - name: Test OK.
-  command: "echo OK"
+  command: "echo {{ aspenmesh_var }}"
 

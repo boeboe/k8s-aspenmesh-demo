@@ -1,5 +1,7 @@
 - name: Install AspenMesh
   hosts: localhost
   connection: local
+  vars:
+    aspenmesh_var: WOOOOOOOOP
   roles:
     - aspenmesh
