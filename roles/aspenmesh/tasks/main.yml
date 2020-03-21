@@ -7,7 +7,7 @@
 
 - name: Check if aspenmesh username and password are set
   fail: msg='Please source aspenmesh_credentials.sh to set the proper credentials in your local ENV'
-  when: 
+  failed_when: 
     - lookup('env','ASPEN_MESH_USERNAME') == "" 
     - lookup('env','ASPEN_MESH_PASSWORD') == ""
 
