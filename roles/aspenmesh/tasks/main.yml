@@ -1,0 +1,9 @@
+---
+- name: Ensure that admission webhooks are enabled in your Kubernetes cluster.
+  shell: kubectl api-versions | grep admissionregistration
+  failed_when: not admission_webhooks.stdout | bool
+  register: admission_webhooks
+
+- name: Test OK.
+  command: "echo OK"
+
