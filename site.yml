@@ -4,10 +4,3 @@
   roles:
     - docker
     - kubernetes
-
-- name: Install kubectl on Jumphost
-  hosts: localhost
-  connection: local
-  become: yes
-  roles:
-    - jumphost 
