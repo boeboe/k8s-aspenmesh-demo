@@ -3,32 +3,32 @@ global:
   controlPlaneSecurityEnabled: true
   mtls:
     enabled: true
-​
+
   imagePullSecrets:
   - aspen-mesh-pull-secret
-​
+
   proxy:
     accessLogFile: "/dev/stdout"
-​
+
   outboundTrafficPolicy:
     mode: REGISTRY_ONLY
-​
+
   tracer:
     zipkin:
       # address is the Host:Port for reporting trace data in zipkin format. If
       # not specified, will default to zipkin service (port 9411) in the same
       # namespace as the other istio components.
       address: ""
-​
+
 galley:
   podAntiAffinityLabelSelector:
   - key: app
     operator: In
     values: galley
     topologyKey: "kubernetes.io/hostname"
-​
+
   replicaCount: 2
-​
+
 gateways:
   istio-ingressgateway:
     autoscaleMin: 2
@@ -54,7 +54,7 @@ gateways:
       operator: In
       values: istio-egressgateway
       topologyKey: "kubernetes.io/hostname"
-​
+
 mixer:
   policy:
     autoscaleMin: 2
@@ -65,7 +65,7 @@ mixer:
     operator: In
     values: mixer
     topologyKey: "kubernetes.io/hostname"
-​
+
 pilot:
   # Aspen Mesh has decided to disable this experimental feature until
   # both outbound and inbound protocol sniffing is merged and is
@@ -77,7 +77,7 @@ pilot:
     operator: In
     values: pilot
     topologyKey: "kubernetes.io/hostname"
-​
+
 sidecarInjectorWebhook:
   replicaCount: 2
   podAntiAffinityLabelSelector:
@@ -93,19 +93,19 @@ security:
     operator: In
     values: security
     topologyKey: "kubernetes.io/hostname"
-​
+
 aspen-mesh-controlplane:
   enabled: true
   image: controlplane-1.4.6-am2
   modelruntimeImage: modelruntime-1.4.6-am2
-​
+
   imagePullSecrets:
   - aspenmesh-kubernetes-pull-secret
-​
+
   replicaCount: 2
-​
-  clusterId: udf-demo
-​
+
+  clusterId: c1.prod.us-west-2
+
   userAuth:
     type: none
     jwt:
@@ -115,7 +115,7 @@ aspen-mesh-controlplane:
       redirectUrl:
       # claims can be added here to require claims be present in the JWT
       # (e.g.: `claims: aud=aspenmesh:io,role=k8s:admin`).
-​
+
   resources:
     requests:
       memory: "128Mi"
@@ -130,12 +130,12 @@ aspen-mesh-controlplane:
     limits:
       memory: "128Mi"
       cpu: "100m"
-​
+
 aspen-mesh-dashboard:
   enabled: true
   image: dashboard-1.4.6-am2
   replicaCount: 2
-​
+
 aspen-mesh-secure-ingress:
   enabled: true
   image: secure-ingress-1.4.6-am2
@@ -145,7 +145,7 @@ aspen-mesh-secure-ingress:
   resources: {}
   externalDnsAnnotation: "policy.aspenmesh.io/externaldns"
   externalDnsEnabled: false
-​
+
 aspen-mesh-metrics-collector:
   enabled: true
   proxyImage: metrics-collector-proxy-1.4.6-am2
@@ -164,20 +164,20 @@ aspen-mesh-metrics-collector:
     limits:
       memory: "512Mi"
       cpu: "500m"
-​
+
 traffic-claim-enforcer:
   enabled: true
   image: traffic-claim-enforcer-1.4.6-am2
   resources: {}
-​
+
 istio_cni:
   # To enable CNI-based installations, set this to true and follow additional
   # CNI installation instructions to install the istio-cni Helm chart
   enabled: false
-​
+
 prometheus:
   enabled: false
-​
+
 cert-manager:
   enabled: false
   image:
@@ -185,12 +185,12 @@ cert-manager:
     cainjector: cert-manager-cainjector-1.4.6-am2
     webhook: cert-manager-webhook-1.4.6-am2
   fullnameOverride: aspen-mesh-cert-manager
-​
+
 external-dns:
   image: external-dns-1.4.6-am2
   enabled: false
   fullnameOverride: aspen-mesh-external-dns
-​
+
   annotationFilter: "policy.aspenmesh.io/externaldns=true"
   policy: sync
   provider: aws

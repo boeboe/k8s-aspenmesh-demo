@@ -50,8 +50,8 @@
 
 - name: Copy values-aspenmesh.yml to tmp folder
   copy:
-    src: values-aspenmesh.yml
-    dest: /tmp/values-aspenmesh.yml
+    src: values-aspenmesh.yaml
+    dest: /tmp/values-aspenmesh.yaml
     mode: '0644'
   when: aspenmesh_chart.rc != 0
 
@@ -59,7 +59,7 @@
   command: >
     helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio
     --namespace istio-system
-    --values /tmp/values-aspenmesh.yml
+    --values /tmp/values-aspenmesh.yaml
   when: aspenmesh_chart.rc != 0
 
 - name: Verify that all 26 Istio and AspenMesh CRDs were committed to the Kubernetes apiserver
