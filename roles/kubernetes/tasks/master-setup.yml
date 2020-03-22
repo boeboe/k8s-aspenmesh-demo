@@ -86,13 +86,20 @@
     - kubernetes_enable_web_ui | bool
     - kubernetes_dashboard_service.rc != 0
 
+- name: Check if Kubernetes Dashboard UI service already exists.
+  shell: kubectl get storageclasses | grep -q local-storage
+  changed_when: false
+  failed_when: false
+  register: kubernetes_local_storage_configured
+  when: kubernetes_local_storage
+
 - name: Copy local-storage-class.yaml to remote tmp folder
   copy:
     src: local-storage-class.yaml
     dest: /tmp/local-storage-class.yaml
     mode: '0644'
-  when: kubernetes_local_storage
+  when: kubernetes_local_storage and kubernetes_local_storage_configured.rc != 0
 
 - name: Create StorageClass for local storage.
   command: "kubectl create -f /tmp/local-storage-class.yaml"
-  when: kubernetes_local_storage
+  when: kubernetes_local_storage and kubernetes_local_storage_configured.rc != 0
