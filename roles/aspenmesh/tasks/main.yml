@@ -48,11 +48,18 @@
   failed_when: false
   register: aspenmesh_chart
 
+- name: Copy values-aspenmesh.yml to tmp folder
+  copy:
+    src: values-aspenmesh.yml
+    dest: /tmp/values-aspenmesh.yml
+    mode: '0644'
+    when: aspenmesh_chart.rc != 0
+
 - name: Use helm to install the aspenmesh istio chart
   command: >
     helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio
     --namespace istio-system
-    --values {{ aspenmesh_install_path }}/install/kubernetes/helm/istio/values-aspenmesh-local.yaml
+    --values /tmp/values-aspenmesh.yml
   when: aspenmesh_chart.rc != 0
 
 - name: Verify that all 26 Istio and AspenMesh CRDs were committed to the Kubernetes apiserver
