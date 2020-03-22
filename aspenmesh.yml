@@ -1,5 +1,7 @@
 - name: Install AspenMesh
   hosts: localhost
   connection: local
+  vars:
+    aspenmesh_install_path: "/home/ubuntu/aspenmesh-1.4.6-am4"
   roles:
     - aspenmesh

@@ -5,22 +5,5 @@
   changed_when: false
   register: admission_webhooks
 
-- name: Check if Aspenmesh username and password are set
-  fail: msg='Please source aspenmesh_credentials.sh to set the proper credentials in your local ENV'
-  failed_when: lookup('env','ASPEN_MESH_USERNAME') == '' or lookup('env','ASPEN_MESH_PASSWORD') == ''
-
-- name: Test OK.
-  command: "echo {{ lookup('env','ASPEN_MESH_USERNAME') }} {{ lookup('env','ASPEN_MESH_PASSWORD') }} {{ aspenmesh_version }}"
-
-- name: Copy docker-storage-setup.sh file to tmp folder
-  copy:
-    src: download-release.sh
-    dest: /tmp
-    mode: 0777
-
-- name: Download Aspenmesh tarball
-  shell: >
-    ASPEN_MESH_VERSION={{ aspenmesh_version }} 
-    ASPEN_MESH_USERNAME={{ lookup('env','ASPEN_MESH_USERNAME') }}
-    ASPEN_MESH_PASSWORD={{ lookup('env','ASPEN_MESH_PASSWORD') }} 
-    /tmp/download-release.sh
+- name: Test install aspenmesh install path
+  shell: echo {{ aspenmesh_install_path }}
