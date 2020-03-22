@@ -45,9 +45,9 @@
 
 - name: Use helm to install the istio-init chart
   command: >
-    "helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio"
-    "--namespace istio-system"
-    "--values {{ aspenmesh_install_path }}/install/kubernetes/helm/istio/values-aspenmesh.yaml"
+    helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio
+    --namespace istio-system
+    --values {{ aspenmesh_install_path }}/install/kubernetes/helm/istio/values-aspenmesh.yaml
   when: aspenmesh_chart.rc != 0
 
 - name: Verify that all 26 Istio and AspenMesh CRDs were committed to the Kubernetes apiserver
