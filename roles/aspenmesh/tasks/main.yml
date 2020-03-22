@@ -19,7 +19,7 @@
 
 - name: Create istio-system namespace
   command: "kubectl create -f {{ aspenmesh_install_path }}/install/kubernetes/namespace.yaml"
-  when: not istio_system_namespace.stdout | bool
+  when: istio_system_namespace.rc != 0
 
 - name: Use helm to install the istio-init chart
   command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
