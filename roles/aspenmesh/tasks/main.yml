@@ -1,6 +1,6 @@
 ---
 - name: Ensure that admission webhooks are enabled in your Kubernetes cluster
-  shell: kubectl api-versions | grep -q admissionregistration
+  shell: "kubectl api-versions | grep -q admissionregistration"
   failed_when: admission_webhooks.rc != 0
   changed_when: false
   register: admission_webhooks
@@ -12,7 +12,7 @@
   register: file_details
 
 - name: Check if istio-system namespace exists
-  shell: kubectl get namespaces istio-system | grep -q istio-system
+  shell: "kubectl get namespaces istio-system | grep -q istio-system"
   changed_when: false
   failed_when: false
   register: istio_system_namespace
@@ -22,16 +22,16 @@
   when: istio_system_namespace.rc != 0
 
 - name: Check if istio-init chart exists
-  shell: helm list -n istio-system | grep -q istio-init
+  shell: "helm list -n istio-system | grep -q istio-init"
   changed_when: false
   failed_when: false
   register: istio_init_chart
 
 - name: Use helm to install the istio-init chart
-  command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
+  command: "helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system"
   when: istio_init_chart.rc != 0
 
 - name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
-  command: kubectl get crds | grep 'istio.io|certmanager.k8s.io|aspenmesh.io' | wc -l
+  command: "kubectl get crds | grep 'istio.io\|certmanager.k8s.io\|aspenmesh.io' | wc -l"
   failed_when: aspenmesh_crd_verification.stdout != "23"
   register: aspenmesh_crd_verification
