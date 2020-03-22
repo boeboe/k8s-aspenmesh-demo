@@ -1,5 +1,5 @@
 ---
-- name: Ensure that admission webhooks are enabled in your Kubernetes cluster.
+- name: Ensure that admission webhooks are enabled in your Kubernetes cluster
   shell: kubectl api-versions | grep -q admissionregistration
   failed_when: admission_webhooks.rc != 0
   changed_when: false
@@ -11,8 +11,15 @@
   failed_when: not file_details.stat.exists
   register: file_details
 
+- name: Check if istio-system namespace exists
+  shell: kubectl get namespaces istio-system | grep -q istio-system
+  changed_when: false
+  failed_when: false
+  register: istio_system_namespace
+
 - name: Create istio-system namespace
   command: "kubectl create -f {{ aspenmesh_install_path }}/install/kubernetes/namespace.yaml"
+  when: not istio_system_namespace.stdout | bool
 
 - name: Use helm to install the istio-init chart
   command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
