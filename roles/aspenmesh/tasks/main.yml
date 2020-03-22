@@ -53,7 +53,7 @@
     src: values-aspenmesh.yml
     dest: /tmp/values-aspenmesh.yml
     mode: '0644'
-    when: aspenmesh_chart.rc != 0
+  when: aspenmesh_chart.rc != 0
 
 - name: Use helm to install the aspenmesh istio chart
   command: >
