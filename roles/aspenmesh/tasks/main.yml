@@ -34,5 +34,24 @@
 - name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
   shell: "kubectl get crds | grep 'istio.io\\|certmanager.k8s.io\\|aspenmesh.io' | wc -l"
   changed_when: false
-  failed_when: aspenmesh_crd_verification.stdout != "23"
+  failed_when: isto_crd_verification.stdout != "23"
+  register: istio_crd_verification
+
+- name: Check if aspenmesh chart exists
+  shell: "helm list -n istio-system | grep -q aspenmesh"
+  changed_when: false
+  failed_when: false
+  register: aspenmesh_chart
+
+- name: Use helm to install the istio-init chart
+  command: >
+    "helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio"
+    "--namespace istio-system"
+    "--values {{ aspenmesh_install_path }}/install/kubernetes/helm/istio/values-aspenmesh.yaml"
+  when: aspenmesh_chart.rc != 0
+
+- name: Verify that all 26 Istio and AspenMesh CRDs were committed to the Kubernetes apiserver
+  shell: "kubectl get crds | grep 'istio.io\\|certmanager.k8s.io\\|aspenmesh.io' | wc -l"
+  changed_when: false
+  failed_when: aspenmesh_crd_verification.stdout != "26"
   register: aspenmesh_crd_verification
