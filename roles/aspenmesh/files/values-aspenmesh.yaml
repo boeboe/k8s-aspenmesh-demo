@@ -104,7 +104,7 @@ aspen-mesh-controlplane:
 
   replicaCount: 2
 
-  clusterId: c1.prod.us-west-2
+  clusterId: udf-demo
 
   userAuth:
     type: none
