@@ -18,6 +18,6 @@
   command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
 
 - name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
-  command: kubectl get crds | grep 'istio.io\|certmanager.k8s.io\|aspenmesh.io' | wc -l
+  command: kubectl get crds | grep 'istio.io|certmanager.k8s.io|aspenmesh.io' | wc -l
   failed_when: aspenmesh_crd_verification.stdout != "23"
   register: aspenmesh_crd_verification
