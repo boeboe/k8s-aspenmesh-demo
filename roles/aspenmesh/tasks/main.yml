@@ -11,6 +11,9 @@
   failed_when: not file_details.stat.exists
   register: file_details
 
+- name: Create istio-system namespace
+  command: "kubectl create -f {{ aspenmesh_install_path }}/install/kubernetes/namespace.yaml"
+
 - name: Use helm to install the istio-init chart
   command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
 
