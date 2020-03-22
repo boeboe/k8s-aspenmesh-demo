@@ -8,7 +8,7 @@
 - name: Verify install Aspenmesh install path
   stat:
     path: "{{ aspenmesh_install_path }}"
-  failed_when: file_details.stat.exists
+  failed_when: not file_details.stat.exists
   register: file_details
 
 - name: Use helm to install the istio-init chart
