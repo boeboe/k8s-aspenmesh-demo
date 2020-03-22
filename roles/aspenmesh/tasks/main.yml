@@ -5,5 +5,16 @@
   changed_when: false
   register: admission_webhooks
 
-- name: Test install aspenmesh install path
-  shell: echo {{ aspenmesh_install_path }}
+- name: Verify install Aspenmesh install path
+  stat:
+    path: {{ aspenmesh_install_path }}
+  failed_when: file_details.stat.exists
+  register: file_details
+
+- name: Use helm to install the istio-init chart
+  command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
+
+- name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
+  command: kubectl get crds | grep 'istio.io\|certmanager.k8s.io\|aspenmesh.io' | wc -l
+  failed_when: aspenmesh_crd_verification.stdout != "23"
+  register: aspenmesh_crd_verification
