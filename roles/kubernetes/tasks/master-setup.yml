@@ -84,4 +84,15 @@
   command: "kubectl create -f {{ kubernetes_web_ui_manifest_file }}"
   when:
     - kubernetes_enable_web_ui | bool
-    - not kubernetes_dashboard_service.stdout | bool
+    - kubernetes_dashboard_service.rc != 0
+
+- name: Copy local-storage-class.yaml to remote tmp folder
+  copy:
+    src: local-storage-class.yaml
+    dest: /tmp/local-storage-class.yaml
+    mode: '0644'
+  when: kubernetes_local_storage
+
+- name: Create StorageClass for local storage.
+  command: "kubectl create -f /tmp/local-storage-class.yaml"
+  when: kubernetes_local_storage

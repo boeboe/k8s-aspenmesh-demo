@@ -13,7 +13,7 @@ kubernetes_version: '1.15'
 
 kubernetes_role: master
 
-kubernetes_kubelet_extra_args: ""
+kubernetes_kubelet_extra_args: "--feature-gates=PersistentLocalVolumes=true,VolumeScheduling=true,MountPropagation=true"
 kubernetes_kubeadm_init_extra_opts: ""
 kubernetes_join_command_extra_opts: ""
 
@@ -44,3 +44,6 @@ kubernetes_flannel_manifest_file: https://raw.githubusercontent.com/coreos/flann
 
 # Calico config files
 kubernetes_calico_manifest_file: https://docs.projectcalico.org/v3.10/manifests/calico.yaml
+
+# Enable local storageclass
+kubernetes_local_storage: true
