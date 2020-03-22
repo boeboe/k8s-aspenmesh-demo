@@ -34,7 +34,7 @@
 - name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
   shell: "kubectl get crds | grep 'istio.io\\|certmanager.k8s.io\\|aspenmesh.io' | wc -l"
   changed_when: false
-  failed_when: isto_crd_verification.stdout != "23"
+  failed_when: istio_crd_verification.stdout != "23"
   register: istio_crd_verification
 
 - name: Check if aspenmesh chart exists
