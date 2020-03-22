@@ -37,13 +37,13 @@
   failed_when: istio_crd_verification.stdout != "23"
   register: istio_crd_verification
 
-- name: Check if aspenmesh chart exists
+- name: Check if aspenmesh istio chart exists
   shell: "helm list -n istio-system | grep -q aspenmesh"
   changed_when: false
   failed_when: false
   register: aspenmesh_chart
 
-- name: Use helm to install the istio-init chart
+- name: Use helm to install the aspenmesh istio chart
   command: >
     helm install aspenmesh {{ aspenmesh_install_path }}/install/kubernetes/helm/istio
     --namespace istio-system
