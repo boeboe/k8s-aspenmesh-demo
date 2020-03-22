@@ -176,7 +176,7 @@ istio_cni:
   enabled: false
 
 prometheus:
-  enabled: false
+  enabled: true
 
 cert-manager:
   enabled: false
