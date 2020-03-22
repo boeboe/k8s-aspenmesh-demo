@@ -21,8 +21,15 @@
   command: "kubectl create -f {{ aspenmesh_install_path }}/install/kubernetes/namespace.yaml"
   when: istio_system_namespace.rc != 0
 
+- name: Check if istio-init chart exists
+  shell: helm list -n istio-system | grep -q istio-init
+  changed_when: false
+  failed_when: false
+  register: istio_init_chart
+
 - name: Use helm to install the istio-init chart
   command: helm install istio-init {{ aspenmesh_install_path }}/install/kubernetes/helm/istio-init --namespace istio-system
+  when: istio_init_chart.rc != 0
 
 - name: Verify that all 23 Istio CRDs were committed to the Kubernetes apiserver
   command: kubectl get crds | grep 'istio.io|certmanager.k8s.io|aspenmesh.io' | wc -l
